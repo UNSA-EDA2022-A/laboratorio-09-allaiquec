@@ -100,20 +100,8 @@ public class GraphAdjacentList implements Graph {
     }
 
     public int countConnectedComponents(){
-        ArrayList<Vertex> aV = depthFirstSearch(vertices.get(0));
-        int c = 1;
-         
-        for (int i = 1; (0 != numVertices && i < numVertices); i++) {   
-            if (!aV.contains(vertices.get(i)))   
-                c++; 
-            
-            if (aV.contains(vertices.get(i))) 
-            	continue;  
-            
-            aV = depthFirstSearch(vertices.get(i));
-        }
+       return -1;
         
-        return c;
     }
 
     public boolean removeVertex(int vertex){
