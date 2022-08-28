@@ -86,30 +86,27 @@ public class GraphAdjacentList implements Graph {
     }
     
     public ArrayList<Vertex> depthFirstSearch(Vertex v) {
-        return this.depthFirstSearch(v, new ArrayList<Vertex>());
+        return depthFirstSearch(v, new ArrayList<Vertex>());
     }
 
     public ArrayList<Vertex> depthFirstSearch(Vertex n, ArrayList<Vertex> visited) {
         visited.add(n);  
-        for (Vertex vertex : n.adjacentVertices) { 
-            if (!vertices.contains(vertex))  
-                depthFirstSearch(vertex, visited);
+        for (Vertex v : n.adjacentVertices) { 
+            if (!vertices.contains(v))  
+                depthFirstSearch(v, visited);
         }
         return visited;
     }
 
-    public int countConnectedComponents(){
-        int c = 1;
-        ArrayList<Vertex> aV = depthFirstSearch(vertices.get(0));   
-
-        for (int i = 1; 0 < numVertices && i < numVertices; i++) {   
-            if (!aV.contains(vertices.get(i)))   
-                c++; 
-            
-            if (aV.contains(vertices.get(i))) 
-            	continue;  
-            
-            aV = depthFirstSearch(vertices.get(i));
+     public int countConnectedComponents(){
+        ArrayList<Vertex> aV = new ArrayList<Vertex>();
+        int c = 0;
+        
+        vertex.addAll(this.vertices);
+        while(aV.size()>0){
+            for(Vertex v : depthFirstSearch(aV.get(aV.size()-1),new ArrayList<Vertex>()))
+                vertex.remove(v);
+            c++;
         }
         return c;
     }
