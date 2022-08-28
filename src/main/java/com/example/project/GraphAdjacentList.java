@@ -84,10 +84,6 @@ public class GraphAdjacentList implements Graph {
     public void setNumVertices(int numVertices) {
         this.numVertices = numVertices;
     }
-    
-    public ArrayList<Vertex> depthFirstSearch(Vertex v) {
-        return depthFirstSearch(v, new ArrayList<Vertex>());
-    }
 
     public ArrayList<Vertex> depthFirstSearch(Vertex n, ArrayList<Vertex> visited) {
         visited.add(n);  
