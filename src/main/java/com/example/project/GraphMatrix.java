@@ -77,9 +77,20 @@ public class GraphMatrix implements Graph {
         return s;
     }
 
-    public int countConnectedComponents() {
-
-        return -1;
+    public int countConnectedComponents() { 
+        ArrayList<Integer> aV = new ArrayList<Integer>();
+        int c = 0;
+        
+        for(int i = 0; i < numVertices; i++)
+            aV.add(i);
+        
+        while(!aV.isEmpty()){
+            for(Integer n : depthFirstSearch(aV.get(aV.size()-1)))
+            	aV.remove(n);
+            c++;
+        }
+        
+        return c;
     }
 
     public static void main(String args[]) {
