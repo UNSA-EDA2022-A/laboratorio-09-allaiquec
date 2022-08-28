@@ -84,15 +84,15 @@ public class GraphAdjacentList implements Graph {
     public void setNumVertices(int numVertices) {
         this.numVertices = numVertices;
     }
-
+    
     public ArrayList<Vertex> depthFirstSearch(Vertex v) {
-        return depthFirstSearch(v, new ArrayList<Vertex>());
+        return this.depthFirstSearch(v, new ArrayList<Vertex>());
     }
 
-    public ArrayList<Vertex> depthFirstSearch(Vertex v, ArrayList<Vertex> visited) {
-        visited.add(v);  
-        for (Vertex vertex : v.adjacentVertices) {  
-            if (!vertices.contains(vertex)) 
+    public ArrayList<Vertex> depthFirstSearch(Vertex n, ArrayList<Vertex> visited) {
+        visited.add(n);  
+        for (Vertex vertex : n.adjacentVertices) { 
+            if (!vertices.contains(vertex))  
                 depthFirstSearch(vertex, visited);
         }
         return visited;
@@ -100,39 +100,41 @@ public class GraphAdjacentList implements Graph {
 
     public int countConnectedComponents(){
         int c = 1;
-        
-        ArrayList<Vertex> av = depthFirstSearch(vertices.get(0));   
+        ArrayList<Vertex> aV = depthFirstSearch(vertices.get(0));   
 
-        for (int i = 1; numVertices > 0 && i < numVertices; i++) {  
-            if (!av.contains(vertices.get(i)))  
+        for (int i = 1; 0 < numVertices && i < numVertices; i++) {   
+            if (!aV.contains(vertices.get(i)))   
                 c++; 
             
-            av = depthFirstSearch(vertices.get(i));
+            if (aV.contains(vertices.get(i))) 
+            	continue;  
+            
+            aV = depthFirstSearch(vertices.get(i));
         }
         return c;
     }
 
     public boolean removeVertex(int vertex){
-    	 Vertex aux = null;
-         
-         for(Vertex v: vertices) {
-             if(v.data == vertex ) 
-                 aux = v;        
-         }
-         
-         if(aux == null)
-             return false;
+        int aux = 0;
+        
+        for (int i = 0; i < vertices.size(); i++) { 
+            Vertex v = vertices.get(i);  
 
-         while(!aux.adjacentVertices.isEmpty())
-             removeEdge(vertex, aux.adjacentVertices.get(0).data);
-         
-         vertices.remove(aux);
-         
-         numVertices--;
-         
-         return true;
+            if (vertex == vertices.get(i).data) 
+            	aux = i; 
+
+            for (int j = 0; j < v.adjacentVertices.size(); j++) {
+                if (vertex == v.adjacentVertices.get(j).data) 
+                    v.removeAdjacentVertex(vertex);
+            }
+        }
+        
+        vertices.remove(aux); 
+        numVertices--;
+        return true;
     }
-    
+
+
     public static void main(String args[]) {
         GraphAdjacentList graph = new GraphAdjacentList();
         graph.addEdge(1, 2);
