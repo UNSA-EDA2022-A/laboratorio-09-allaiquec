@@ -85,14 +85,51 @@ public class GraphAdjacentList implements Graph {
         this.numVertices = numVertices;
     }
 
+        public ArrayList<Vertex> depthFirstSearch(Vertex v,ArrayList<Vertex> visited){
+        visited.add(v);
+        for(Vertex n : v.adjacentVertices){
+            if(!visited.contains(n))
+                depthFirstSearch(n, visited);
+        }
+        return visited;
+    }
+    
     public int countConnectedComponents(){
-        return -1;
+    	int c = 0;
+        
+    	ArrayList<Vertex> v = new ArrayList<Vertex>();
+        v.addAll(vertices);
+        while(!v.isEmpty()){
+        	for(Vertex n : depthFirstSearch(v.get(v.size() - 1), new ArrayList<Vertex>()))
+        		v.remove(n);
+        	c++;
+        }
+        
+        return c;
+    
     }
 
     public boolean removeVertex(int vertex){
-        return false;
-    }
+    	 Vertex aux = null;
+         
+         for(Vertex v: vertices) {
+             if(v.data == vertex ) 
+                 aux = v;        
+         }
+         
+         if(aux == null)
+             return false;
 
+         while(!aux.adjacentVertices.isEmpty())
+             removeEdge(vertex, aux.adjacentVertices.get(0).data);
+         
+         vertices.remove(aux);
+         
+         numVertices--;
+         
+         return true;
+    }
+    
     public static void main(String args[]) {
         GraphAdjacentList graph = new GraphAdjacentList();
         graph.addEdge(1, 2);
