@@ -95,19 +95,24 @@ public class GraphAdjacentList implements Graph {
             if (!vertices.contains(v))  
                 depthFirstSearch(v, visited);
         }
+        
         return visited;
     }
 
-     public int countConnectedComponents(){
-        ArrayList<Vertex> aV = new ArrayList<Vertex>();
-        int c = 0;
-        
-        vertex.addAll(this.vertices);
-        while(aV.size()>0){
-            for(Vertex v : depthFirstSearch(aV.get(aV.size()-1),new ArrayList<Vertex>()))
-                vertex.remove(v);
-            c++;
+    public int countConnectedComponents(){
+        ArrayList<Vertex> aV = depthFirstSearch(vertices.get(0));
+        int c = 1;
+         
+        for (int i = 1; (0 != numVertices && i < numVertices); i++) {   
+            if (!aV.contains(vertices.get(i)))   
+                c++; 
+            
+            if (aV.contains(vertices.get(i))) 
+            	continue;  
+            
+            aV = depthFirstSearch(vertices.get(i));
         }
+        
         return c;
     }
 
